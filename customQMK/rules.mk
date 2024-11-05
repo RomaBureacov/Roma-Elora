@@ -13,8 +13,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# Note: this list is not exhaustive!
-# See https://docs.qmk.fm for more features
+LTO_ENABLE = no
 
 ## Hardware features
 
@@ -24,7 +23,8 @@ OLED_ENABLE = yes          # Enable OLEDs, `yes` or `no`
 # Audio: optional, requires soldering
 # The Elora is equipped with a footprint
 # for the PKLCS1212E4001-R1
-AUDIO_ENABLE = no          # Enable audio support, `yes` or `no`
+AUDIO_ENABLE = yes          # Enable audio support, `yes` or `no`
+AUDIO_DRIVER = pwm_hardware
 
 ## Software features
 
@@ -34,3 +34,26 @@ EXTRAKEY_ENABLE = yes      # Audio and system control
 
 # N-key rollover instead of 6-key rollover
 NKRO_ENABLE = yes          # Enable N-Key Rollover
+
+# Caps word
+CAPS_WORD_ENABLE = yes
+
+# Tap dance
+TAP_DANCE_ENABLE = yes
+
+# Repeat key
+REPEAT_KEY_ENABLE = yes
+
+# RGB
+# RGB_MATRIX_DRIVER = ws2812
+
+# Swap hands for one-handed typing
+# SWAP_HANDS_ENABLE = yes
+
+## Vial-specific settings
+
+# VIA_ENABLE = yes
+# VIAL_ENABLE = yes
+# VIALRGB_ENABLE = yes
+# ENCODER_MAP_ENABLE = yes
+
