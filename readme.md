@@ -1,25 +1,13 @@
-# Elora
-TODO TODO
+Personal keymap configuration for the Elora rev1.
 
-Keyboard Maintainer: [splitkb.com](https://github.com/splitkb)  
-Hardware Availability: [splitkb.com](https://splitkb.com).
+To see how to get started on modifying the Elora firmware, see: [How to Compile Elora Firmware and Make Use of its Piezo Buzzers](https://www.reddit.com/r/ErgoMechKeyboards/comments/1fb6qfg/how_to_compile_elora_firmware_and_make_use_of_its/)
 
-Make example for this keyboard (after setting up your build environment):
-
-    make splitkb/elora/rev1:default
-
-The keyboard can be flashed by copying the resulting `splitkb_elora_rev1_default.uf2` file onto the `RPI-RP2` flash drive.
-
-See the [build environment setup](https://docs.qmk.fm/#/getting_started_build_tools) and the [make instructions](https://docs.qmk.fm/#/getting_started_make_guide) for more information. Brand new to QMK? Start with our [Complete Newbs Guide](https://docs.qmk.fm/#/newbs).
-
-## Bootloader
-You can enter the bootloader in 3 ways:
-
-* **Reset button**: Double-tap the reset button on the side of the PCB.
-* **Bootloader reset**: Hold down the "Boot" button and plug in the keyboard.
-* **Keycode in layout**: Press the key mapped to `QK_BOOT` if it is available.
-
-# Features
-The Elora supports the following features:
-
-- TODO TODO TODO
+Features:
+* Left hand mode
+* Double-tap left hand mode
+* Switching to Engram as default layout and back to QWERTY
+* Double-tap left shift to enter into caps word mode
+* Supports piezo buzzers
+* Has a custom song that plays on startup
+* Supports music mode
+* Experimental keymap for gaming
