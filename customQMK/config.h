@@ -66,3 +66,6 @@
 // RGB configuration
 // additional configuration options https://docs.qmk.fm/features/rgb_matrix#additional-configh-options
 #define SPLIT_LAYER_STATE_ENABLE
+#define SPLIT_TRANSPORT_MIRROR // for reactive effects
+// #define RGB_MATRIX_TIMEOUT 300000 // sleep in 5 minutes of inactivity
+// TODO: idle lighting?

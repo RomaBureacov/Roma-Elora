@@ -58,18 +58,18 @@ enum layers {
 
 bool game_mode_on = false;
 
-// TODO: how come when defined up here it plays, but when inside layer_state_set_user it does not play fully?
 float time_to_dive[][2] = SONG(HELLDIVER_INTRO); 
 float dive_complete[][2] = SONG(HELLDIVER_OUTRO);
 
 // for condition of caps word (won't work inside the layer_state_set_user as expected as it doesn't trigger a layer change)
 void caps_word_set_user(bool active) {
   if (active) {
-    rgb_matrix_mode(RGB_MATRIX_SOLID_REACTIVE);
-    rgb_matrix_sethsv(25, 255, 255); // orange
+    rgb_matrix_mode_noeeprom(RGB_MATRIX_SOLID_REACTIVE);
+    rgb_matrix_sethsv_noeeprom(25, 255, 255); // orange
   } else layer_state_set_user(layer_state); // call back on the layer rgb matrix handler to figure out where it left off
 }
 
+// TODO: idle lighting?
 layer_state_t layer_state_set_user(layer_state_t state) {
   if (IS_LAYER_ON_STATE(state, _GAMING_CONTROLS) && !game_mode_on) {
     PLAY_SONG(time_to_dive);
@@ -80,27 +80,27 @@ layer_state_t layer_state_set_user(layer_state_t state) {
   }
 
   if (host_keyboard_led_state().caps_lock) { // caps lock/word take precedence in RGB matrix mode
-    rgb_matrix_mode(RGB_MATRIX_SOLID_REACTIVE);
-    rgb_matrix_sethsv(0, 255, 255); // red
+    rgb_matrix_mode_noeeprom(RGB_MATRIX_SOLID_REACTIVE);
+    rgb_matrix_sethsv_noeeprom(0, 255, 255); // red
   } else if (!is_caps_word_on()) { // rest is decided by the layer order, assuming caps word is not active (caps word takes precedence)
     switch (get_highest_layer(state | default_layer_state)) { // note: layer state and default layer states are separate entities
       case _QWERTY:
-        rgb_matrix_mode(RGB_MATRIX_CYCLE_OUT_IN_DUAL);
+        rgb_matrix_mode_noeeprom(RGB_MATRIX_CYCLE_OUT_IN_DUAL);
         rgb_matrix_set_speed(75);
         break;
       case _ENGRAM:
-        rgb_matrix_mode(RGB_MATRIX_RAINBOW_PINWHEELS);
+        rgb_matrix_mode_noeeprom(RGB_MATRIX_RAINBOW_PINWHEELS);
         rgb_matrix_set_speed(75);
         break;
       case _LEFTY_OS_MO: 
       case _LEFTY_TD:
-        rgb_matrix_mode(RGB_MATRIX_SOLID_REACTIVE);
-        rgb_matrix_sethsv(165, 0xFF, 0xFF); // teal
+        rgb_matrix_mode_noeeprom(RGB_MATRIX_SOLID_REACTIVE);
+        rgb_matrix_sethsv_noeeprom(165, 0xFF, 0xFF); // teal
         break;
       // case _NUMPAD:
       // case _FUNCTIONS:
       case _GAMING_CONTROLS:
-        rgb_matrix_mode(RGB_MATRIX_CYCLE_UP_DOWN);
+        rgb_matrix_mode_noeeprom(RGB_MATRIX_CYCLE_UP_DOWN);
         break;
       // case _GAMING_EXTRAS:
       default:
@@ -123,10 +123,10 @@ void setLED(unsigned int LED_indices[], unsigned int red, unsigned int green, un
 }
 
 bool rgb_matrix_indicators_user() {
-  if (IS_LAYER_ON(_NUMPAD)) setLED((unsigned int[]){9, 10, 11}, 255, 255, 0, 3);
-  if (IS_LAYER_ON(_FUNCTIONS))  setLED((unsigned int[]){6, 7, 8}, 255, 255, 0, 3);
-  if (IS_LAYER_ON(_GAMING_EXTRAS)) setLED((unsigned int[]){0, 1, 2, 3}, 100, 0, 255, 4);
-
+  if (IS_LAYER_ON(_NUMPAD)) setLED((unsigned int[]){9, 10, 11}, 255, 255, 0, 3); // yellow
+  if (IS_LAYER_ON(_FUNCTIONS))  setLED((unsigned int[]){6, 7, 8}, 255, 255, 0, 3); // yellow
+  if (IS_LAYER_ON(_GAMING_EXTRAS)) setLED((unsigned int[]){0, 1, 2, 3}, 100, 0, 255, 4); // purple
+  if (IS_LAYER_ON(_TEMP1)) setLED((unsigned int[]){5}, 255, 255, 0, 1); // yellow
   return true;
 }
 
@@ -441,7 +441,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |--------+------+------+------+------+------|      |------|  |------|      |------+------+------+------+------+--------|
  * | TRNS   |  2   |  A   |  W   |  D   |  0   |      |      |  |      |      |      | LFT  | UP   | RGT  |      |        |
  * |--------+------+------+------+------+------+------+------|  |------|------+------+------+------+------+------+--------|
- * | TRNS   |  1   |  Z   |  S   |  C   |  V   |      |  TG  |  |      |      |      |      | DN   |      |      | TG     |
+ * | TRNS   |  1   |  Z   |  S   |  C   |  V   | LALT |  TG  |  |      |      |      |      | DN   |      |      | TG     |
  * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
  *                        |  T   |  E   |  R   | TRNS |  MO  |  |      |      |      |      |      |
  *                        |      |      |      |      |      |  |      |      |      |      |      |
@@ -455,7 +455,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       _______, KC_4   , KC_5   , KC_6   , KC_7   , KC_8   ,          _______  , _______,          _______, _______, _______, _______, _______, _______,
       KC_TRNS, KC_3   , KC_Q   , KC_E   , KC_R   , KC_9   ,          _______  , _______,          _______, _______, _______, _______, _______, _______,
       KC_TRNS, KC_2   , KC_A   , KC_W   , KC_D   , KC_0   ,          _______  , _______,          _______, KC_LEFT, KC_UP  ,KC_RIGHT, _______, _______,
-      KC_TRNS, KC_1   , KC_Z   , KC_S   , KC_C   , KC_V   , _______, TG(GM_CT), _______, _______, _______, _______, KC_DOWN, _______, _______, TG(GM_CT),
+      KC_TRNS, KC_1   , KC_Z   , KC_S   , KC_C   , KC_V   , KC_LALT, TG(GM_CT), _______, _______, _______, _______, KC_DOWN, _______, _______, TG(GM_CT),
                                  KC_T   , KC_E   , KC_R   , KC_TRNS, MO(GM_EX), _______, _______, _______, _______, _______,
 
       _______, _______, _______, _______,          _______,                   _______, _______, _______, _______,          _______

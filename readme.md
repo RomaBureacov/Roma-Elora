@@ -1,5 +1,7 @@
 Personal keymap configuration for the Elora rev1.
 
+If you would like to use the keymap, simply drop the folder `customQMK` into your personal `splitkb\elora\keymaps` folder.
+
 To see how to get started on modifying the Elora firmware, see: [How to Compile Elora Firmware and Make Use of its Piezo Buzzers](https://www.reddit.com/r/ErgoMechKeyboards/comments/1fb6qfg/how_to_compile_elora_firmware_and_make_use_of_its/)
 
 Features:
